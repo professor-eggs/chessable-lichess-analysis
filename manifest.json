@@ -1,0 +1,17 @@
+{
+    "manifest_version": 2,
+    "name": "Chessable to Lichess Redirect",
+    "version": "1.0",
+    "description": "Redirects Chessable analysis to Lichess with the current FEN.",
+    "icons": {
+        "48": "icon.png"
+    },
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
+    },
+    "permissions": [
+        "tabs",
+        "*://www.chessable.com/analysis/*"
+    ]
+}

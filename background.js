@@ -3,13 +3,22 @@ function onUpdated(tabId, changeInfo) {
     changeInfo.url &&
     changeInfo.url.includes('https://www.chessable.com/analysis/fen/')
   ) {
-    const fenPart = changeInfo.url.split('fen/')[1];
-    if (fenPart) {
-      const fen = fenPart.split('/')[0];
-      const formattedFen = fen.replace(/U/g, '/').replace(/%20/g, ' ');
-      const lichessUrl = `https://lichess.org/analysis/standard/${formattedFen}`;
+    const urlParts = changeInfo.url.split('fen/');
+    if (urlParts.length > 1) {
+      const fenPart = urlParts[1].split('/')[0];
+      const formattedFen = fenPart.replace(/U/g, '/').replace(/%20/g, ' ');
+
+      // Extracting the color parameter
+      const colorParam = changeInfo.url.includes('?o=black')
+        ? 'black'
+        : 'white';
+
+      // Constructing the Lichess URL with the color parameter
+      const lichessUrl = `https://lichess.org/analysis/standard/${formattedFen}?color=${colorParam}`;
+
       chrome.tabs.update(tabId, { url: lichessUrl });
     }
   }
 }
+
 chrome.tabs.onUpdated.addListener(onUpdated);

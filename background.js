@@ -1,4 +1,4 @@
-chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+function onUpdated(tabId, changeInfo) {
   if (
     changeInfo.url &&
     changeInfo.url.includes('https://www.chessable.com/analysis/fen/')
@@ -11,4 +11,5 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
       chrome.tabs.update(tabId, { url: lichessUrl });
     }
   }
-});
+}
+chrome.tabs.onUpdated.addListener(onUpdated);
